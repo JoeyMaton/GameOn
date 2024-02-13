@@ -29,47 +29,33 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
+ // Affiche les données recuperées
+ let form = document.querySelector("form");
+ 
+ form.addEventListener("submit", (event) => {
+   event.preventDefault();
+ 
+   let balisePrenom = document.getElementById("first");
+   let baliseNom = document.getElementById("last");
+   const errorFirstName = document.getElementById("error-firstname");
+   const errorLastName = document.getElementById("error-lastname");
+ 
+   validateWithMinimumCharacters(balisePrenom.value, errorFirstName, "Prénom pas bon");
+   validateWithMinimumCharacters(baliseNom.value, errorLastName, "Nom pas bon");
+ 
+   let baliseEmail = document.getElementById("email");
+   console.log(baliseEmail.value);
+ });
 
-
-// Affiche les données recuperées
-let form = document.querySelector("form")
-
-form.addEventListener("submit", () => {
-  event.preventDefault()
-
-  let balisePrenom = document.getElementById("first")
-  console.log(balisePrenom.value)
-
-  let baliseNom = document.getElementById("last")
-  console.log(baliseNom.value)
-
-  let baliseEmail = document.getElementById("email")
-  console.log(baliseEmail.value)
-})
-
-/**
- * Cette fonction prend un prenom en paramètre et valide qu'il est au bon format
- * ici : deux caractères au minimum
- * @param {string} balisePrenom 
- * @throws {Error} 
- */
-function validerPrenom(balisePrenom){
-  if (balisePrenom.length < 2) {
-    throw new Error("Le prénom est trop court. ")
-  }
-}
-
-/**
- * Cette fonction prend un nom en paramètre et valide qu'il est au bon format
- * ici : deux caractères au minimum
- * @param {string} baliseNom
- * @throws {Error} 
- */
-function validerNom(baliseNom){
-  if (baliseNom.length < 2) {
-    throw new Error("Le nom est trop court. ")
-  }
-}
+ 
+ function validateWithMinimumCharacters(value, errorElement, errorMessage) {
+   if (value.length < 2) {
+     errorElement.innerText = errorMessage;
+     return true;
+   }
+   errorElement.innerText = "";
+   return false;
+ };
 
 /**
  * Cette fonction prend un email en paramètre et valide qu'il est au bon format
@@ -82,22 +68,6 @@ function validerEmail(baliseEmail) {
   if (!emailRegExp.test(baliseEmail)) {
     throw new Error("L'Email n'est pas valide. ")
   } 
-}
-
-
-function afficherMessageErreur(message) {
-
-    let spanErreurMessage = document.getElementById("erreurMessage")
-
-    if (!spanErreurMessage) {
-        let popup = document.querySelector(".text-control")
-        spanErreurMessage = document.createElement("span")
-        spanErreurMessage.id = "erreurMessage"
-        popup.append(spanErreurMessage)
-    }
-   
-    spanErreurMessage.innerText = message
-
 }
 
 function gererFormulaire() {
