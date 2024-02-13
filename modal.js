@@ -84,12 +84,6 @@ function closeModal() {
    return false;
  }
 
-/**
- * Cette fonction prend un email en paramètre et valide qu'il est au bon format
- * ici : deux caractères au minimum
- * @param {string} baliseEmail 
- * @throws {Error} 
- */
 function validateEmail(baliseEmail, errorElement, errorMessage) {
   let emailRegExp = new RegExp("[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z._-]+")
   if (!emailRegExp.test(baliseEmail)) {
