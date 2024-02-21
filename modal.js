@@ -57,7 +57,7 @@ function closeModal() {
 
    let Concours = document.getElementById("quantity");
    const errorConcours = document.getElementById("error-concours");
-   validateConcours(Concours.value, errorConcours, "Une valeur numérique doit être saisie. ");
+   validateConcours(Concours.value, errorConcours, "Une valeur numérique compris entre 0 et 100 doit être saisie. ");
    console.log(Concours.value);
 
    let ListBtnRadio = document.querySelectorAll("input[type=radio]")
@@ -107,11 +107,11 @@ function validateBirthDate(BirthDate, errorElement, errorMessage) {
  
 
 function validateConcours(Concours, errorElement, errorMessage) {
-  let concoursRegExp = new RegExp("[0-9]+")
+  let concoursRegExp = new RegExp("^[0-9]{1,2}$")
   if (!concoursRegExp.test(Concours)) {
     errorElement.innerText = errorMessage;
     return true;
-  } 
+  }
     errorElement.innerText = "";
     return false;
 }
