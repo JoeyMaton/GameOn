@@ -36,43 +36,55 @@ function closeModal() {
    event.preventDefault();
  
    let firstName = document.getElementById("first");
-   const errorFirstName = document.getElementById("error-firstname");
-   validateWithMinimumCharacters(firstName.value, errorFirstName, "Le prénom doit contenir 2 caractères au minimum. ");
+   const hasFirstNameError = document.getElementById("error-firstname");
+   validateWithMinimumCharacters(firstName.value, hasFirstNameError, "Le prénom doit contenir 2 caractères au minimum. ");
    console.log(firstName.value);
 
    let lastName = document.getElementById("last");
-   const errorLastName = document.getElementById("error-lastname");
-   validateWithMinimumCharacters(lastName.value, errorLastName, "Le nom doit contenir 2 caractères au minimum. ");
+   const hasLastNameError = document.getElementById("error-lastname");
+   validateWithMinimumCharacters(lastName.value, hasLastNameError, "Le nom doit contenir 2 caractères au minimum. ");
    console.log(lastName.value);
  
-   let Email = document.getElementById("email");
-   const errorEmail = document.getElementById("error-email");
-   validateEmail(Email.value, errorEmail, "L'email n'est pas valide. ")
-   console.log(Email.value);
+   let email = document.getElementById("email");
+   const hasEmailError = document.getElementById("error-email");
+   validateEmail(email.value, hasEmailError, "L'email n'est pas valide. ")
+   console.log(email.value);
 
-   let BirthDate = document.getElementById("birthdate");
-   const errorBirthDate = document.getElementById("error-birthdate");
-   validateBirthDate(BirthDate, errorBirthDate, "Veuillez entrer une date de naissance valide.")
-   console.log(BirthDate.value)
+   let birthDate = document.getElementById("birthdate");
+   const hasBirthDateError = document.getElementById("error-birthdate");
+   validateBirthDate(birthDate, hasBirthDateError, "Veuillez entrer une date de naissance valide.")
+   console.log(birthDate.value)
 
-   let Concours = document.getElementById("quantity");
-   const errorConcours = document.getElementById("error-concours");
-   validateConcours(Concours.value, errorConcours, "Une valeur numérique compris entre 0 et 100 doit être saisie. ");
-   console.log(Concours.value);
+   let concours = document.getElementById("quantity");
+   const hasConcoursError = document.getElementById("error-concours");
+   validateConcours(concours.value, hasConcoursError, "Une valeur numérique compris entre 0 et 100 doit être saisie. ");
+   console.log(concours.value);
 
-   let ListBtnRadio = document.querySelectorAll("input[type=radio]")
-   const errorBtnRadio = document.getElementById("error-btnRadio")
-   validateBtnRadio(ListBtnRadio,errorBtnRadio, "Un bouton doit être selectionné. ")
+   let listBtnRadio = document.querySelectorAll('input[name="location"]')
+   const hasBtnRadioError = document.getElementById("error-btnRadio")
+   validateBtnRadio(listBtnRadio, hasBtnRadioError, "Un bouton doit être selectionné. ")
   
    
 
    let checkbox1 = document.getElementById("checkbox1")
-   const errorCheckbox = document.getElementById("error-checkbox")
-   validateCheckbox(checkbox1, errorCheckbox, "Vous devez accepter les conditions d'utilisation. ")
+   const hasCheckboxError = document.getElementById("error-checkbox")
+   validateCheckbox(checkbox1, hasCheckboxError, "Vous devez accepter les conditions d'utilisation. ")
    console.log(checkbox1.checked);
 
-   let checkbox2 = document.getElementById("checkbox2")
-   console.log(checkbox2.checked);
+// All return false
+if (
+  !hasFirstNameError &&
+  !hasLastNameError &&
+  !hasEmailError &&
+  !hasBirthDateError &&
+  !hasConcoursError &&
+  !hasBtnRadioError &&
+  !hasCheckboxError
+)
+  {
+    const modalContent = document.querySelector(".modal-body");
+    modalContent.innerHTML = '<h1>Merci ! Votre réservation a été reçue.</h1>';
+  }
  });
 
 
@@ -86,9 +98,9 @@ function validateWithMinimumCharacters(value, errorElement, errorMessage) {
   return false;
 }
 
-function validateEmail(Email, errorElement, errorMessage) {
+function validateEmail(email, errorElement, errorMessage) {
   let emailRegExp = new RegExp("[a-z0-9._-]@+[a-z0-9._-]+\\.[a-z._-]+")
-  if (!emailRegExp.test(Email)) {
+  if (!emailRegExp.test(email)) {
     errorElement.innerText = errorMessage;
     return true;
   } 
@@ -96,8 +108,8 @@ function validateEmail(Email, errorElement, errorMessage) {
     return false;
 }
 
-function validateBirthDate(BirthDate, errorElement, errorMessage) {
-  if (BirthDate.value === "") {
+function validateBirthDate(birthDate, errorElement, errorMessage) {
+  if (birthDate.value === "") {
     errorElement.innerText = errorMessage;
     return true;
   } 
@@ -106,9 +118,9 @@ function validateBirthDate(BirthDate, errorElement, errorMessage) {
 }
  
 
-function validateConcours(Concours, errorElement, errorMessage) {
+function validateConcours(concours, errorElement, errorMessage) {
   let concoursRegExp = new RegExp("^[0-9]{1,2}$")
-  if (!concoursRegExp.test(Concours)) {
+  if (!concoursRegExp.test(concours)) {
     errorElement.innerText = errorMessage;
     return true;
   }
@@ -116,15 +128,15 @@ function validateConcours(Concours, errorElement, errorMessage) {
     return false;
 }
 
-function validateBtnRadio (ListBtnRadio, errorElement, errorMessage) {
-  for (let i = 0; i < ListBtnRadio.length; i++) {
-  if (!ListBtnRadio[i].checked) {
-    errorElement.innerText = errorMessage;
-    return true;
-  } 
+function validateBtnRadio (listBtnRadio, errorElement, errorMessage) {
+  for (let i = 0; i < listBtnRadio.length; i++)
+  if (listBtnRadio[i].checked) {
+    console.log(listBtnRadio[i].value);
     errorElement.innerText = "";
     return false;
   }
+  errorElement.innerText = errorMessage;
+    return true;
 }
 
 function validateCheckbox (checkbox1, errorElement, errorMessage) {
@@ -132,11 +144,6 @@ function validateCheckbox (checkbox1, errorElement, errorMessage) {
     errorElement.innerText = errorMessage;
     return true;
   } 
-    errorElement.innerText = "";
-    return false;
-}
-
-// Success message if everything is validated
-function validateForm() {
-  
+  errorElement.innerText = "";
+  return false;
 }
