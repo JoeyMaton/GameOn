@@ -109,12 +109,15 @@ function validateEmail(email, errorElement, errorMessage) {
 }
 
 function validateBirthDate(birthDate, errorElement, errorMessage) {
-  if (birthDate.value === "") {
+    const date = new Date(birthDate);
+   
+  
     errorElement.innerText = errorMessage;
     return true;
-  } 
+  }
     errorElement.innerText = "";
     return false;
+
 }
  
 
