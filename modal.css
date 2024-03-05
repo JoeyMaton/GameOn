@@ -183,6 +183,14 @@ main {
   padding-top: 10px;
 }
 
+.success {
+  display: none;
+  padding: 265px 8%;
+  margin: 15px auto;
+  height: 78vh;
+  text-align: center;
+}
+
 .modal-body {
   padding: 15px 8%;
   margin: 15px auto;
