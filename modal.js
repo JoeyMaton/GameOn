@@ -60,15 +60,16 @@ function closeModal() {
    validateConcours(concours.value, hasConcoursError, "Une valeur numérique compris entre 0 et 100 doit être saisie. ");
    console.log(concours.value);
 
-   let listBtnRadio = document.querySelectorAll('input[name="location"]')
-   const hasBtnRadioError = document.getElementById("error-btnRadio")
-   validateBtnRadio(listBtnRadio, hasBtnRadioError, "Un bouton doit être selectionné. ")
+   let listBtnRadio = document.querySelector("input[name='location']:checked");
+   const hasBtnRadioError = document.getElementById("error-btnRadio");
+   validateBtnRadio(listBtnRadio, hasBtnRadioError, "Un bouton doit être selectionné. ");
+   console.log(listBtnRadio.value)
   
    
 
-   let checkbox1 = document.getElementById("checkbox1")
-   const hasCheckboxError = document.getElementById("error-checkbox")
-   validateCheckbox(checkbox1, hasCheckboxError, "Vous devez accepter les conditions d'utilisation. ")
+   let checkbox1 = document.getElementById("checkbox1");
+   const hasCheckboxError = document.getElementById("error-checkbox");
+   validateCheckbox(checkbox1, hasCheckboxError, "Vous devez accepter les conditions d'utilisation. ");
    console.log(checkbox1.checked);
 
 // All return false
@@ -83,7 +84,7 @@ if (
 )
   {
     const modalContent = document.querySelector(".modal-body");
-    modalContent.innerHTML = '<h1>Merci ! Votre réservation a été reçue.</h1>';
+    modalContent.innerHTML = `<h1>Merci ! Votre réservation a été reçue.</h1>`;
   }
  });
 
@@ -109,15 +110,15 @@ function validateEmail(email, errorElement, errorMessage) {
 }
 
 function validateBirthDate(birthDate, errorElement, errorMessage) {
-    const date = new Date(birthDate);
+    const today = new Date();
+    today.setFullYear(today.getFullYear() - 80);
    
-  
+  if (new Date(birthDate.value).getTime() < today.getTime() || birthDate.value === "") {
     errorElement.innerText = errorMessage;
     return true;
   }
     errorElement.innerText = "";
     return false;
-
 }
  
 
@@ -132,14 +133,12 @@ function validateConcours(concours, errorElement, errorMessage) {
 }
 
 function validateBtnRadio (listBtnRadio, errorElement, errorMessage) {
-  for (let i = 0; i < listBtnRadio.length; i++)
-  if (listBtnRadio[i].checked) {
-    console.log(listBtnRadio[i].value);
-    errorElement.innerText = "";
-    return false;
-  }
-  errorElement.innerText = errorMessage;
+if (listBtnRadio === null) {
+    errorElement.innerText = errorMessage;
     return true;
+  }
+   errorElement.innerText = "";
+    return false;
 }
 
 function validateCheckbox (checkbox1, errorElement, errorMessage) {
